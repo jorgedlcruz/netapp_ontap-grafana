@@ -1,0 +1,3157 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_INFLUXDB",
+      "label": "InfluxDB",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "influxdb",
+      "pluginName": "InfluxDB"
+    }
+  ],
+  "__requires": [
+    {
+      "type": "panel",
+      "id": "bargauge",
+      "name": "Bar gauge",
+      "version": ""
+    },
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "7.4.1"
+    },
+    {
+      "type": "datasource",
+      "id": "influxdb",
+      "name": "InfluxDB",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "stat",
+      "name": "Stat",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "table",
+      "name": "Table",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "text",
+      "name": "Text",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "timeseries",
+      "name": "Time series",
+      "version": ""
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "description": "Grafana Dashboard for Veeam Backup for Azure (v2)",
+  "editable": true,
+  "gnetId": 12204,
+  "graphTooltip": 0,
+  "id": null,
+  "iteration": 1617582644218,
+  "links": [],
+  "panels": [
+    {
+      "datasource": "${DS_INFLUXDB}",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 3,
+        "x": 0,
+        "y": 0
+      },
+      "id": 28,
+      "options": {
+        "content": "<a href=\"https://www.veeam.com/backup-azure.html\" target=\"_blank\"><img src=\"https://www.mysmartgroup.co.uk/wp-content/uploads/2017/12/NetApp-logo.png\" alt=\"NetApp-logo\" width=\"100%\"/></a>\n\n",
+        "mode": "html"
+      },
+      "pluginVersion": "7.4.1",
+      "targets": [
+        {
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "",
+      "transparent": true,
+      "type": "text"
+    },
+    {
+      "datasource": "${DS_INFLUXDB}",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {},
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#2e71bf",
+                "value": null
+              }
+            ]
+          },
+          "unit": "locale"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 21,
+        "x": 3,
+        "y": 0
+      },
+      "id": 2,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {
+          "valueSize": 20
+        },
+        "textMode": "name"
+      },
+      "pluginVersion": "7.4.1",
+      "targets": [
+        {
+          "alias": "Cluster Name: $tag_clustername",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "clustername"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "netapp_cluster_overview",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "versiongeneration"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "OS version: $tag_clusterversion",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "clusterversion"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "netapp_cluster_overview",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "versiongeneration"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "MGM Network: $tag_managementnetwork",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "managementnetwork"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "netapp_cluster_overview",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "versiongeneration"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": "${DS_INFLUXDB}",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 2
+      },
+      "id": 41,
+      "panels": [],
+      "repeat": "clustername",
+      "title": "Cluster Metrics",
+      "type": "row"
+    },
+    {
+      "datasource": "${DS_INFLUXDB}",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "latency in ms",
+            "axisPlacement": "left",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 40,
+            "gradientMode": "hue",
+            "hideFrom": {
+              "graph": false,
+              "legend": false,
+              "tooltip": false
+            },
+            "lineInterpolation": "smooth",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true
+          },
+          "decimals": 0,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "ms"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Latency Total"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#01adbd",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.fillOpacity",
+                "value": 60
+              },
+              {
+                "id": "custom.gradientMode",
+                "value": "none"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Latency Write"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Latency Read"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-yellow",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Latency Other"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-purple",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 0,
+        "y": 3
+      },
+      "id": 35,
+      "interval": null,
+      "maxDataPoints": null,
+      "options": {
+        "graph": {},
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltipOptions": {
+          "mode": "multi"
+        }
+      },
+      "pluginVersion": "7.4.1",
+      "targets": [
+        {
+          "alias": "Latency Other",
+          "groupBy": [
+            {
+              "params": [
+                "$inter"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "netapp_cluster_metrics",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "latencyOther"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              },
+              {
+                "params": [
+                  " / 1000"
+                ],
+                "type": "math"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "clustername",
+              "operator": "=~",
+              "value": "/^$clustername$/"
+            }
+          ]
+        },
+        {
+          "alias": "Latency Read",
+          "groupBy": [
+            {
+              "params": [
+                "$inter"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "netapp_cluster_metrics",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "latencyRead"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              },
+              {
+                "params": [
+                  " / 1000"
+                ],
+                "type": "math"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "clustername",
+              "operator": "=~",
+              "value": "/^$clustername$/"
+            }
+          ]
+        },
+        {
+          "alias": "Latency Write",
+          "groupBy": [
+            {
+              "params": [
+                "$inter"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "netapp_cluster_metrics",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "D",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "latencyWrite"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              },
+              {
+                "params": [
+                  " / 1000"
+                ],
+                "type": "math"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "clustername",
+              "operator": "=~",
+              "value": "/^$clustername$/"
+            }
+          ]
+        },
+        {
+          "alias": "Latency Total",
+          "groupBy": [
+            {
+              "params": [
+                "$inter"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "netapp_cluster_metrics",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "latencyTotal"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              },
+              {
+                "params": [
+                  " / 1000"
+                ],
+                "type": "math"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "clustername",
+              "operator": "=~",
+              "value": "/^$clustername$/"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "title": "Latency",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "${DS_INFLUXDB}",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {},
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-blue",
+                "value": null
+              }
+            ]
+          },
+          "unit": "bytes"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Data Reduction"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "to 1"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 12,
+        "x": 12,
+        "y": 3
+      },
+      "id": 39,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "vertical",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {
+          "titleSize": 25,
+          "valueSize": 25
+        },
+        "textMode": "value_and_name"
+      },
+      "pluginVersion": "7.4.1",
+      "repeat": null,
+      "targets": [
+        {
+          "alias": "Used",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "netapp_aggregate_overview",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT last(\"efficiencylogical\") FROM \"netapp_aggregate_overview\" WHERE (\"clustername\" =~ /^$clustername$/ AND \"aggregateName\" =~ /^$aggregate$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "efficiencylogical"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "clustername",
+              "operator": "=~",
+              "value": "/^$clustername$/"
+            },
+            {
+              "condition": "AND",
+              "key": "aggregateName",
+              "operator": "=~",
+              "value": "/^$aggregate$/"
+            }
+          ]
+        },
+        {
+          "alias": "Available",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "netapp_aggregate_overview",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "spaceblockstorageavailable"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "clustername",
+              "operator": "=~",
+              "value": "/^$clustername$/"
+            },
+            {
+              "condition": "AND",
+              "key": "aggregateName",
+              "operator": "=~",
+              "value": "/^$aggregate$/"
+            }
+          ]
+        },
+        {
+          "alias": "Data Reduction",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "netapp_aggregate_overview",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "efficencyratio"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "clustername",
+              "operator": "=~",
+              "value": "/^$clustername$/"
+            },
+            {
+              "condition": "AND",
+              "key": "aggregateName",
+              "operator": "=~",
+              "value": "/^$aggregate$/"
+            }
+          ]
+        }
+      ],
+      "title": "Capacity - $aggregate",
+      "type": "stat"
+    },
+    {
+      "datasource": "${DS_INFLUXDB}",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {},
+          "decimals": 2,
+          "mappings": [],
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 70
+              },
+              {
+                "color": "dark-orange",
+                "value": 80
+              },
+              {
+                "color": "dark-red",
+                "value": 90
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 1,
+        "w": 12,
+        "x": 12,
+        "y": 5
+      },
+      "id": 44,
+      "options": {
+        "displayMode": "lcd",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showUnfilled": true,
+        "text": {}
+      },
+      "pluginVersion": "7.4.1",
+      "targets": [
+        {
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT last(\"efficiencylogical\") * (100 / last(\"spaceblockstorageavailable\"))  FROM \"netapp_aggregate_overview\" WHERE (\"clustername\" =~ /^$clustername$/ AND \"aggregateName\" =~ /^$aggregate$/) AND $timeFilter GROUP BY time($inter) , \"source\"  fill(none)",
+          "rawQuery": true,
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "title": "",
+      "transparent": true,
+      "type": "bargauge"
+    },
+    {
+      "cacheTimeout": null,
+      "datasource": "${DS_INFLUXDB}",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "center",
+            "displayMode": "color-background",
+            "filterable": false
+          },
+          "mappings": [
+            {
+              "from": "",
+              "id": 1,
+              "text": "🟢",
+              "to": "",
+              "type": 1,
+              "value": "1"
+            },
+            {
+              "from": "",
+              "id": 2,
+              "text": "🔴",
+              "to": "",
+              "type": 1,
+              "value": "2"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#dd6095",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 12,
+        "x": 12,
+        "y": 6
+      },
+      "id": 32,
+      "interval": "",
+      "links": [],
+      "options": {
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "7.4.1",
+      "targets": [
+        {
+          "alias": "",
+          "groupBy": [
+            {
+              "params": [
+                "SVMName"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "netapp_SVM_overview",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT last(\"VMSize\") AS \"VM  Size\" FROM \"veeam_azure_vm_unprotected\" WHERE (\"VMName\" =~ /^$VMName$/) AND $timeFilter GROUP BY \"VMName\", \"VMRegion\" ",
+          "rawQuery": false,
+          "refId": "A",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "SVMNFS"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              },
+              {
+                "params": [
+                  "NFS"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "clustername",
+              "operator": "=~",
+              "value": "/^$clustername$/"
+            }
+          ],
+          "tz": ""
+        },
+        {
+          "alias": "",
+          "groupBy": [
+            {
+              "params": [
+                "SVMName"
+              ],
+              "type": "tag"
+            }
+          ],
+          "hide": false,
+          "measurement": "netapp_SVM_overview",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT last(\"VMSize\") AS \"VM  Size\" FROM \"veeam_azure_vm_unprotected\" WHERE (\"VMName\" =~ /^$VMName$/) AND $timeFilter GROUP BY \"VMName\", \"VMRegion\" ",
+          "rawQuery": false,
+          "refId": "B",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "SVMCIFS"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              },
+              {
+                "params": [
+                  "CIFS"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "clustername",
+              "operator": "=~",
+              "value": "/^$clustername$/"
+            }
+          ],
+          "tz": ""
+        },
+        {
+          "alias": "",
+          "groupBy": [
+            {
+              "params": [
+                "SVMName"
+              ],
+              "type": "tag"
+            }
+          ],
+          "hide": false,
+          "measurement": "netapp_SVM_overview",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT last(\"VMSize\") AS \"VM  Size\" FROM \"veeam_azure_vm_unprotected\" WHERE (\"VMName\" =~ /^$VMName$/) AND $timeFilter GROUP BY \"VMName\", \"VMRegion\" ",
+          "rawQuery": false,
+          "refId": "C",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "SVMISCSI"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              },
+              {
+                "params": [
+                  "iSCSI"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "clustername",
+              "operator": "=~",
+              "value": "/^$clustername$/"
+            }
+          ],
+          "tz": ""
+        },
+        {
+          "alias": "",
+          "groupBy": [
+            {
+              "params": [
+                "SVMName"
+              ],
+              "type": "tag"
+            }
+          ],
+          "hide": false,
+          "measurement": "netapp_SVM_overview",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT last(\"VMSize\") AS \"VM  Size\" FROM \"veeam_azure_vm_unprotected\" WHERE (\"VMName\" =~ /^$VMName$/) AND $timeFilter GROUP BY \"VMName\", \"VMRegion\" ",
+          "rawQuery": false,
+          "refId": "D",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "SVMFCP"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              },
+              {
+                "params": [
+                  "FCP"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "clustername",
+              "operator": "=~",
+              "value": "/^$clustername$/"
+            }
+          ],
+          "tz": ""
+        },
+        {
+          "alias": "",
+          "groupBy": [
+            {
+              "params": [
+                "SVMName"
+              ],
+              "type": "tag"
+            }
+          ],
+          "hide": false,
+          "measurement": "netapp_SVM_overview",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT last(\"VMSize\") AS \"VM  Size\" FROM \"veeam_azure_vm_unprotected\" WHERE (\"VMName\" =~ /^$VMName$/) AND $timeFilter GROUP BY \"VMName\", \"VMRegion\" ",
+          "rawQuery": false,
+          "refId": "E",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "SVMNVME"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              },
+              {
+                "params": [
+                  "NVMe"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "clustername",
+              "operator": "=~",
+              "value": "/^$clustername$/"
+            }
+          ],
+          "tz": ""
+        },
+        {
+          "alias": "",
+          "groupBy": [
+            {
+              "params": [
+                "SVMName"
+              ],
+              "type": "tag"
+            }
+          ],
+          "hide": false,
+          "measurement": "netapp_SVM_overview",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT last(\"VMSize\") AS \"VM  Size\" FROM \"veeam_azure_vm_unprotected\" WHERE (\"VMName\" =~ /^$VMName$/) AND $timeFilter GROUP BY \"VMName\", \"VMRegion\" ",
+          "rawQuery": false,
+          "refId": "F",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "SVMS3"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              },
+              {
+                "params": [
+                  "S3"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "clustername",
+              "operator": "=~",
+              "value": "/^$clustername$/"
+            }
+          ],
+          "tz": ""
+        },
+        {
+          "alias": "",
+          "groupBy": [
+            {
+              "params": [
+                "SVMName"
+              ],
+              "type": "tag"
+            }
+          ],
+          "hide": false,
+          "measurement": "netapp_SVM_overview",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT last(\"VMSize\") AS \"VM  Size\" FROM \"veeam_azure_vm_unprotected\" WHERE (\"VMName\" =~ /^$VMName$/) AND $timeFilter GROUP BY \"VMName\", \"VMRegion\" ",
+          "rawQuery": false,
+          "refId": "G",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "SVMSnapMirror"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              },
+              {
+                "params": [
+                  "SnapMirror"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "clustername",
+              "operator": "=~",
+              "value": "/^$clustername$/"
+            }
+          ],
+          "tz": ""
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Storage VMs",
+      "transformations": [
+        {
+          "id": "seriesToColumns",
+          "options": {
+            "byField": "SVMName"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "PolicyDescription 1": false,
+              "Time": true,
+              "Time 1": true,
+              "Time 2": true,
+              "Time 3": true,
+              "Time 4": true,
+              "Time 5": true,
+              "Time 6": true,
+              "Time 7": true
+            },
+            "indexByName": {
+              "Application-Aware": 9,
+              "Daily": 13,
+              "Monthly": 21,
+              "PolicyDescription 1": 6,
+              "PolicyDescription 2": 10,
+              "PolicyDescription 3": 14,
+              "PolicyDescription 4": 18,
+              "PolicyDescription 5": 22,
+              "PolicyName": 5,
+              "PolicyStatus 1": 7,
+              "PolicyStatus 2": 11,
+              "PolicyStatus 3": 15,
+              "PolicyStatus 4": 19,
+              "PolicyStatus 5": 23,
+              "TenantID 1": 8,
+              "TenantID 2": 12,
+              "TenantID 3": 16,
+              "TenantID 4": 20,
+              "TenantID 5": 24,
+              "Time 1": 0,
+              "Time 2": 1,
+              "Time 3": 2,
+              "Time 4": 3,
+              "Time 5": 4,
+              "Weekly": 17,
+              "Yearly": 25
+            },
+            "renameByName": {
+              "Application-Aware": "Application-Aware",
+              "Daily": "Daily Snapshots",
+              "Monthly": "Monthly Snapshots",
+              "PolicyDescription 1": "Description",
+              "PolicyName": "Name",
+              "PolicyStatus": "Enabled",
+              "PolicyStatus 1": "",
+              "SVMName": "Name",
+              "Weekly": "Weekly Snapshots",
+              "Yearly": "Yearly Snapshots"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "cacheTimeout": null,
+      "datasource": "${DS_INFLUXDB}",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "center",
+            "displayMode": "color-background",
+            "filterable": false
+          },
+          "mappings": [
+            {
+              "from": "",
+              "id": 1,
+              "text": "🟢",
+              "to": "",
+              "type": 1,
+              "value": "1"
+            },
+            {
+              "from": "",
+              "id": 2,
+              "text": "🔴",
+              "to": "",
+              "type": 1,
+              "value": "2"
+            },
+            {
+              "from": "",
+              "id": 3,
+              "text": "🟢",
+              "to": "",
+              "type": 1,
+              "value": "online"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#00a071",
+                "value": null
+              }
+            ]
+          },
+          "unit": "bytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 12,
+        "x": 12,
+        "y": 9
+      },
+      "id": 45,
+      "interval": "",
+      "links": [],
+      "options": {
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "7.4.1",
+      "targets": [
+        {
+          "alias": "",
+          "groupBy": [
+            {
+              "params": [
+                "SVMName"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "volumeName"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "netapp_volumes_overview",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT last(\"VMSize\") AS \"VM  Size\" FROM \"veeam_azure_vm_unprotected\" WHERE (\"VMName\" =~ /^$VMName$/) AND $timeFilter GROUP BY \"VMName\", \"VMRegion\" ",
+          "rawQuery": false,
+          "refId": "A",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "volumeAvailable"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              },
+              {
+                "params": [
+                  "available"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "clustername",
+              "operator": "=~",
+              "value": "/^$clustername$/"
+            },
+            {
+              "condition": "AND",
+              "key": "SVMName",
+              "operator": "=~",
+              "value": "/^$svm$/"
+            }
+          ],
+          "tz": ""
+        },
+        {
+          "alias": "",
+          "groupBy": [
+            {
+              "params": [
+                "volumeName"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "volumestyle"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "volumestate"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "netapp_volumes_overview",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT last(\"VMSize\") AS \"VM  Size\" FROM \"veeam_azure_vm_unprotected\" WHERE (\"VMName\" =~ /^$VMName$/) AND $timeFilter GROUP BY \"VMName\", \"VMRegion\" ",
+          "rawQuery": false,
+          "refId": "E",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "volumesize"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              },
+              {
+                "params": [
+                  "size"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "clustername",
+              "operator": "=~",
+              "value": "/^$clustername$/"
+            },
+            {
+              "condition": "AND",
+              "key": "SVMName",
+              "operator": "=~",
+              "value": "/^$svm$/"
+            }
+          ],
+          "tz": ""
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Volumes",
+      "transformations": [
+        {
+          "id": "seriesToColumns",
+          "options": {
+            "byField": "volumeName"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "PolicyDescription 1": false,
+              "SVMName 2": true,
+              "SVMName 3": true,
+              "SVMName 4": true,
+              "Time": true,
+              "Time 1": true,
+              "Time 2": true,
+              "Time 3": true,
+              "Time 4": true,
+              "Time 5": true,
+              "Time 6": true,
+              "Time 7": true
+            },
+            "indexByName": {
+              "SVMName": 6,
+              "Time 1": 0,
+              "Time 2": 1,
+              "Time 3": 2,
+              "Time 4": 3,
+              "Time 5": 4,
+              "available": 9,
+              "footprint": 10,
+              "local tier footprint": 11,
+              "size": 8,
+              "used": 12,
+              "volumeName": 5,
+              "volumestate": 7,
+              "volumestyle": 13
+            },
+            "renameByName": {
+              "Application-Aware": "Application-Aware",
+              "Daily": "Daily Snapshots",
+              "Monthly": "Monthly Snapshots",
+              "PolicyDescription 1": "Description",
+              "PolicyName": "Name",
+              "PolicyStatus": "Enabled",
+              "PolicyStatus 1": "",
+              "SVMName": "Storage VM",
+              "Weekly": "Weekly Snapshots",
+              "Yearly": "Yearly Snapshots",
+              "available": "Available",
+              "footprint": "",
+              "size": "Total",
+              "volumeName": "Name",
+              "volumestate": "Status",
+              "volumestyle": "Style"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": "${DS_INFLUXDB}",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "IOPS",
+            "axisPlacement": "left",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 40,
+            "gradientMode": "hue",
+            "hideFrom": {
+              "graph": false,
+              "legend": false,
+              "tooltip": false
+            },
+            "lineInterpolation": "smooth",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true
+          },
+          "decimals": 0,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "locale"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "IOPS Other"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-purple",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "IOPS Read"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-yellow",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "IOPS Total"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#01adbd",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.fillOpacity",
+                "value": 60
+              },
+              {
+                "id": "custom.gradientMode",
+                "value": "none"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "IOPS Write"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 0,
+        "y": 10
+      },
+      "id": 36,
+      "interval": null,
+      "maxDataPoints": null,
+      "options": {
+        "graph": {},
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltipOptions": {
+          "mode": "multi"
+        }
+      },
+      "pluginVersion": "7.4.1",
+      "targets": [
+        {
+          "alias": "IOPS Other",
+          "groupBy": [
+            {
+              "params": [
+                "$inter"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "netapp_cluster_metrics",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "iopsOther"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "clustername",
+              "operator": "=~",
+              "value": "/^$clustername$/"
+            }
+          ]
+        },
+        {
+          "alias": "IOPS Read",
+          "groupBy": [
+            {
+              "params": [
+                "$inter"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "netapp_cluster_metrics",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "iopsRead"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "clustername",
+              "operator": "=~",
+              "value": "/^$clustername$/"
+            }
+          ]
+        },
+        {
+          "alias": "IOPS Write",
+          "groupBy": [
+            {
+              "params": [
+                "$inter"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "netapp_cluster_metrics",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "D",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "iopsWrite"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "clustername",
+              "operator": "=~",
+              "value": "/^$clustername$/"
+            }
+          ]
+        },
+        {
+          "alias": "IOPS Total",
+          "groupBy": [
+            {
+              "params": [
+                "$inter"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "netapp_cluster_metrics",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "iopsTotal"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "clustername",
+              "operator": "=~",
+              "value": "/^$clustername$/"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "title": "IOPS",
+      "type": "timeseries"
+    },
+    {
+      "cacheTimeout": null,
+      "datasource": "${DS_INFLUXDB}",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "center",
+            "displayMode": "color-background",
+            "filterable": false
+          },
+          "mappings": [
+            {
+              "from": "",
+              "id": 1,
+              "text": "🟢",
+              "to": "",
+              "type": 1,
+              "value": "1"
+            },
+            {
+              "from": "",
+              "id": 2,
+              "text": "🔴",
+              "to": "",
+              "type": 1,
+              "value": "2"
+            },
+            {
+              "from": "",
+              "id": 3,
+              "text": "🟢",
+              "to": "",
+              "type": 1,
+              "value": "online"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#89d7d2",
+                "value": null
+              }
+            ]
+          },
+          "unit": "bytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 12,
+        "x": 12,
+        "y": 13
+      },
+      "id": 47,
+      "interval": "",
+      "links": [],
+      "options": {
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "7.4.1",
+      "targets": [
+        {
+          "alias": "",
+          "groupBy": [
+            {
+              "params": [
+                "SVMName"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "LUNName"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "LUNOSType"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "LUNstate"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "LUNlocation"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "netapp_LUN_overview",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT last(\"VMSize\") AS \"VM  Size\" FROM \"veeam_azure_vm_unprotected\" WHERE (\"VMName\" =~ /^$VMName$/) AND $timeFilter GROUP BY \"VMName\", \"VMRegion\" ",
+          "rawQuery": false,
+          "refId": "A",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "LUNSize"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              },
+              {
+                "params": [
+                  "Size"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "clustername",
+              "operator": "=~",
+              "value": "/^$clustername$/"
+            },
+            {
+              "condition": "AND",
+              "key": "SVMName",
+              "operator": "=~",
+              "value": "/^$svm$/"
+            }
+          ],
+          "tz": ""
+        },
+        {
+          "alias": "",
+          "groupBy": [
+            {
+              "params": [
+                "SVMName"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "LUNName"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "netapp_LUN_overview",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT last(\"VMSize\") AS \"VM  Size\" FROM \"veeam_azure_vm_unprotected\" WHERE (\"VMName\" =~ /^$VMName$/) AND $timeFilter GROUP BY \"VMName\", \"VMRegion\" ",
+          "rawQuery": false,
+          "refId": "B",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "LUNUsed"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              },
+              {
+                "params": [
+                  "Used"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "clustername",
+              "operator": "=~",
+              "value": "/^$clustername$/"
+            },
+            {
+              "condition": "AND",
+              "key": "SVMName",
+              "operator": "=~",
+              "value": "/^$svm$/"
+            }
+          ],
+          "tz": ""
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "LUN",
+      "transformations": [
+        {
+          "id": "seriesToColumns",
+          "options": {
+            "byField": "LUNName"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "PolicyDescription 1": false,
+              "SVMName 2": true,
+              "SVMName 3": true,
+              "SVMName 4": true,
+              "Time": true,
+              "Time 1": true,
+              "Time 2": true,
+              "Time 3": true,
+              "Time 4": true,
+              "Time 5": true,
+              "Time 6": true,
+              "Time 7": true
+            },
+            "indexByName": {
+              "LUNName": 2,
+              "LUNOSType": 5,
+              "LUNlocation": 6,
+              "LUNstate": 4,
+              "SVMName 1": 3,
+              "SVMName 2": 8,
+              "Size": 7,
+              "Time 1": 0,
+              "Time 2": 1,
+              "Used": 9
+            },
+            "renameByName": {
+              "Application-Aware": "Application-Aware",
+              "Daily": "Daily Snapshots",
+              "LUNName": "Name",
+              "LUNOSType": "LUN Format",
+              "LUNlocation": "Volume",
+              "LUNstate": "",
+              "Monthly": "Monthly Snapshots",
+              "PolicyDescription 1": "Description",
+              "PolicyName": "Name",
+              "PolicyStatus": "Enabled",
+              "PolicyStatus 1": "",
+              "SVMName": "Storage VM",
+              "SVMName 1": "Storage VM",
+              "Weekly": "Weekly Snapshots",
+              "Yearly": "Yearly Snapshots",
+              "available": "Available",
+              "footprint": "",
+              "size": "Total",
+              "volumeName": "Name",
+              "volumestate": "Status",
+              "volumestyle": "Style"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": "${DS_INFLUXDB}",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "Throughput MB/s",
+            "axisPlacement": "left",
+            "axisWidth": 70,
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 40,
+            "gradientMode": "hue",
+            "hideFrom": {
+              "graph": false,
+              "legend": false,
+              "tooltip": false
+            },
+            "lineInterpolation": "smooth",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true
+          },
+          "decimals": 0,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "Bps"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Throughput Other"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-purple",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Throughput Read"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-yellow",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Throughput Total"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#01adbd",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.fillOpacity",
+                "value": 60
+              },
+              {
+                "id": "custom.gradientMode",
+                "value": "none"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Throughput Write"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 12,
+        "x": 0,
+        "y": 17
+      },
+      "id": 37,
+      "interval": null,
+      "maxDataPoints": null,
+      "options": {
+        "graph": {},
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltipOptions": {
+          "mode": "multi"
+        }
+      },
+      "pluginVersion": "7.4.1",
+      "targets": [
+        {
+          "alias": "Throughput Other",
+          "groupBy": [
+            {
+              "params": [
+                "$inter"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "netapp_cluster_metrics",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "troughputOther"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "clustername",
+              "operator": "=~",
+              "value": "/^$clustername$/"
+            }
+          ]
+        },
+        {
+          "alias": "Throughput Read",
+          "groupBy": [
+            {
+              "params": [
+                "$inter"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "netapp_cluster_metrics",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "troughputRead"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "clustername",
+              "operator": "=~",
+              "value": "/^$clustername$/"
+            }
+          ]
+        },
+        {
+          "alias": "Throughput Write",
+          "groupBy": [
+            {
+              "params": [
+                "$inter"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "netapp_cluster_metrics",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "D",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "troughputWrite"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "clustername",
+              "operator": "=~",
+              "value": "/^$clustername$/"
+            }
+          ]
+        },
+        {
+          "alias": "Throughput Total",
+          "groupBy": [
+            {
+              "params": [
+                "$inter"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "netapp_cluster_metrics",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "troughputTotal"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "clustername",
+              "operator": "=~",
+              "value": "/^$clustername$/"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "title": "Throughput",
+      "type": "timeseries"
+    },
+    {
+      "cacheTimeout": null,
+      "datasource": "${DS_INFLUXDB}",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "center",
+            "displayMode": "color-background",
+            "filterable": false
+          },
+          "mappings": [
+            {
+              "from": "",
+              "id": 1,
+              "text": "🟢",
+              "to": "",
+              "type": 1,
+              "value": "1"
+            },
+            {
+              "from": "",
+              "id": 2,
+              "text": "🔴",
+              "to": "",
+              "type": 1,
+              "value": "2"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#353b44",
+                "value": null
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 12,
+        "x": 12,
+        "y": 18
+      },
+      "id": 46,
+      "interval": "",
+      "links": [],
+      "options": {
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "7.4.1",
+      "targets": [
+        {
+          "alias": "",
+          "groupBy": [
+            {
+              "params": [
+                "SVMName"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "shareName"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "sharePath"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "volumeName"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "netapp_shares_overview",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT last(\"VMSize\") AS \"VM  Size\" FROM \"veeam_azure_vm_unprotected\" WHERE (\"VMName\" =~ /^$VMName$/) AND $timeFilter GROUP BY \"VMName\", \"VMRegion\" ",
+          "rawQuery": false,
+          "refId": "A",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "shareEncryption"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              },
+              {
+                "params": [
+                  "available"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "clustername",
+              "operator": "=~",
+              "value": "/^$clustername$/"
+            },
+            {
+              "condition": "AND",
+              "key": "SVMName",
+              "operator": "=~",
+              "value": "/^$svm$/"
+            }
+          ],
+          "tz": ""
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Shares",
+      "transformations": [
+        {
+          "id": "seriesToColumns",
+          "options": {
+            "byField": "volumeName"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "PolicyDescription 1": false,
+              "SVMName 2": true,
+              "SVMName 3": true,
+              "SVMName 4": true,
+              "Time": true,
+              "Time 1": true,
+              "Time 2": true,
+              "Time 3": true,
+              "Time 4": true,
+              "Time 5": true,
+              "Time 6": true,
+              "Time 7": true
+            },
+            "indexByName": {
+              "SVMName": 1,
+              "Time": 5,
+              "available": 4,
+              "shareName": 0,
+              "sharePath": 3,
+              "volumeName": 2
+            },
+            "renameByName": {
+              "Application-Aware": "Application-Aware",
+              "Daily": "Daily Snapshots",
+              "Monthly": "Monthly Snapshots",
+              "PolicyDescription 1": "Description",
+              "PolicyName": "Name",
+              "PolicyStatus": "Enabled",
+              "PolicyStatus 1": "",
+              "SVMName": "Storage VM",
+              "Weekly": "Weekly Snapshots",
+              "Yearly": "Yearly Snapshots",
+              "available": "Encryption",
+              "footprint": "",
+              "shareName": "Name",
+              "sharePath": "Path",
+              "size": "Total",
+              "volumeName": "Volume",
+              "volumestate": "Status",
+              "volumestyle": "Style"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": "${DS_INFLUXDB}",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 5,
+        "x": 19,
+        "y": 22
+      },
+      "id": 10,
+      "options": {
+        "content": "<a href=\"https://www.jorgedelacruz.es\"><img src=\"https://www.jorgedelacruz.es/wp-content/uploads/2019/04/jorgedelacruz-banner_2efede4ef704c939e63a3763231f5961.png\"></a>\n\n\n\n",
+        "mode": "html"
+      },
+      "pluginVersion": "7.4.1",
+      "targets": [
+        {
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "",
+      "transparent": true,
+      "type": "text"
+    }
+  ],
+  "refresh": false,
+  "schemaVersion": 27,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "auto": true,
+        "auto_count": 30,
+        "auto_min": "15s",
+        "current": {
+          "selected": false,
+          "text": "15s",
+          "value": "15s"
+        },
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "label": "Sampling",
+        "name": "inter",
+        "options": [
+          {
+            "selected": false,
+            "text": "auto",
+            "value": "$__auto_interval_inter"
+          },
+          {
+            "selected": true,
+            "text": "15s",
+            "value": "15s"
+          },
+          {
+            "selected": false,
+            "text": "1m",
+            "value": "1m"
+          },
+          {
+            "selected": false,
+            "text": "10m",
+            "value": "10m"
+          },
+          {
+            "selected": false,
+            "text": "30m",
+            "value": "30m"
+          },
+          {
+            "selected": false,
+            "text": "1h",
+            "value": "1h"
+          },
+          {
+            "selected": false,
+            "text": "6h",
+            "value": "6h"
+          },
+          {
+            "selected": false,
+            "text": "12h",
+            "value": "12h"
+          },
+          {
+            "selected": false,
+            "text": "1d",
+            "value": "1d"
+          },
+          {
+            "selected": false,
+            "text": "7d",
+            "value": "7d"
+          },
+          {
+            "selected": false,
+            "text": "14d",
+            "value": "14d"
+          },
+          {
+            "selected": false,
+            "text": "30d",
+            "value": "30d"
+          }
+        ],
+        "query": "15s,1m,10m,30m,1h,6h,12h,1d,7d,14d,30d",
+        "queryValue": "",
+        "refresh": 2,
+        "skipUrlSync": false,
+        "type": "interval"
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "${DS_INFLUXDB}",
+        "definition": "SHOW TAG VALUES FROM netapp_cluster_overview WITH KEY=clustername",
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": true,
+        "label": "Cluster Name",
+        "multi": true,
+        "name": "clustername",
+        "options": [],
+        "query": "SHOW TAG VALUES FROM netapp_cluster_overview WITH KEY=clustername",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "${DS_INFLUXDB}",
+        "definition": "SHOW TAG VALUES FROM netapp_aggregate_overview WITH KEY=aggregateName",
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": true,
+        "label": "Aggregate Name",
+        "multi": true,
+        "name": "aggregate",
+        "options": [],
+        "query": "SHOW TAG VALUES FROM netapp_aggregate_overview WITH KEY=aggregateName",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "${DS_INFLUXDB}",
+        "definition": "SHOW TAG VALUES FROM netapp_SVM_overview WITH KEY=SVMName",
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": true,
+        "label": "SVM Name",
+        "multi": true,
+        "name": "svm",
+        "options": [],
+        "query": "SHOW TAG VALUES FROM netapp_SVM_overview WITH KEY=SVMName",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "${DS_INFLUXDB}",
+        "definition": "SHOW TAG VALUES FROM netapp_volumes_overview WITH KEY=volumeName",
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": true,
+        "label": "Volume Name",
+        "multi": true,
+        "name": "volume",
+        "options": [],
+        "query": "SHOW TAG VALUES FROM netapp_volumes_overview WITH KEY=volumeName",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "${DS_INFLUXDB}",
+        "definition": "SHOW TAG VALUES FROM netapp_shares_overview WITH KEY=shareName",
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": true,
+        "label": "Share Name",
+        "multi": true,
+        "name": "share",
+        "options": [],
+        "query": "SHOW TAG VALUES FROM netapp_shares_overview WITH KEY=shareName",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      }
+    ]
+  },
+  "time": {
+    "from": "now-15m",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ]
+  },
+  "timezone": "",
+  "title": "Grafana Dashboard for NetApp ONTAP v9.8+",
+  "uid": "69rALh_Mz",
+  "version": 23
+}
